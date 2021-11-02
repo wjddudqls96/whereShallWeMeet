@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+      <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=af44e6a34cd67be497818333ab1dd2e4"></script>
+    <script>
+
+         $(document).ready(function () {    //로딩되었을떄
+             console.log({{ postDetailData['location'] }})
+
+         })
+
+        function idCheckClickEvent(){
+            let user_id = $('#id_input').val()
+            console.log(user_id)
+            $.ajax({
+              type: "POST",
+              url: "http://localhost:5000/api/confirm",
+              data: {userId:user_id},
+              success: function(response){
+                  console.log(response)
+              }
+            })
+        }
+    </script>
+    <style>
+        .postDetail_wrap{
+            width: 600px;
+            height: auto;
+            margin: auto;
+
+            margin-top: 50px;
+        }
+        .whereShallWeMeet{
+            width: 600px;
+            text-align: center;
+            height: 50px;
+            font-size: 20px;
+        }
+        .whereShallWeMeet p{
+            margin-top: 10px;
+        }
+        .postDetail_title{
+            width: 600px;
+            height: 45px;
+            border-bottom: 1px solid black;
+            display: flex;
+        }
+        .postDetail_title p{
+            margin-left: 20px;
+            margin-top: 20px;
+            margin-bottom: 5px;
+        }
+        .postDetail_img{
+            border-bottom: 1px solid black;
+            width: 600px;
+            height: 350px;
+        }
+        .postDetail_content{
+            border-bottom: 1px solid black;
+            width: 600px;
+            min-height: 200px;
+        }
+        .postDetail_kakaomap{
+            border-bottom: 1px solid black;
+            width: 600px;
+            height: 250px;
+
+        }
+    </style>
+</head>
+<body>
+    <div class="postDetail_wrap">
+        <div class="whereShallWeMeet">
+            <p>어디서 만날까 ?</p>
+        </div>
+        <div class="postDetail_title">
+            <p>{{ postDetailData['title'] }}</p>
+        </div>
+        <div class="postDetail_img">
+
+        </div>
+        <div class="postDetail_content">
+            <p>{{ postDetailData['content'] }}</p>
+        </div>
+<!--        <div class="postDetail_kakaomap" >-->
+<!--            <div id="map" style="width:600px;height:250px;"></div>-->
+<!--            <script>-->
+<!--                var container = document.getElementById('map');-->
+<!--                var options = {-->
+<!--                    center: new kakao.maps.LatLng({{ postDetailData['location'][0] }}, {{ postDetailData['location'][1] }}),-->
+<!--                    level: 3-->
+<!--                };-->
+<!--                var map = new kakao.maps.Map(container, options);-->
+<!--                var markerPosition  = new kakao.maps.LatLng({{ postDetailData['location'][0] }}, {{ postDetailData['location'][1] }});-->
+<!--                var marker = new kakao.maps.Marker({-->
+<!--                    position: markerPosition-->
+<!--                });-->
+<!--                marker.setMap(map);-->
+<!--            </script>-->
+<!--        </div>-->
+    </div>
+</body>
+</html>

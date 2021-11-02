@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/fontawesome.min.css" integrity="sha384-jLKHWM3JRmfMU0A5x5AkjWkw/EYfGUAGagvnfryNV3F9VqM98XiIH7VBGVoxVSc7" crossorigin="anonymous">
+    <title>Title</title>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=af44e6a34cd67be497818333ab1dd2e4"></script>
+
+    <script>
+
+        function showPostDetail(data){
+            console.log(data)
+            location.href = `postDetailPage/${JSON.stringify(data)}`;
+        }
+        function test(data){
+            console.log(data)
+            $('#exampleModalLong').modal({  //모달키는 기능
+              keyboard: false
+            })
+            $("#exampleModalLong").on('shown.bs.modal', function() {   //모달이 켜지기 전에 카카오맵이 나와서 오류가 걸린다 그래서 이함수 안에 사용한다
+            var container = document.getElementById('map');
+                            var options = {
+                                center: new kakao.maps.LatLng(data['location'][0], data['location'][1]),
+                                level: 3
+                            };
+                            var map = new kakao.maps.Map(container, options);
+                            var markerPosition  = new kakao.maps.LatLng(data['location'][0], data['location'][1]);
+                            var marker = new kakao.maps.Marker({
+                                position: markerPosition
+                            });
+                            marker.setMap(map);
+            })
+            $("#head_title").text(data['title']); //title 넣기
+            $("#content").text(data['content']); //콘텐츠 넣기
+            $("#userNick").text('written by ' + data['nickName']); //콘텐츠 넣기
+            $("#lovebutton").on("click",{cardId:data['_id']},clickLove);
+
+        }
+        function clickLove(event){
+            let carId = event.data['cardId']
+            console.log(carId)
+            $.ajax({
+              type: "POST",
+              url: "http://localhost:5000/api/love",
+              data: {carId:carId},
+              success: function(response){
+                  console.log(response)
+                  if(response['success'] === true){
+                      window.location.reload();
+                  }
+              }
+            })
+        }
+    </script>
+    <style>
+        .card_wrap{
+            width: 1300px;
+            margin: auto;
+            margin-top: 150px;
+        }
+        .colums{
+            -webkit-column-count: 4;
+            -moz-column-count: 4;
+            column-count: 1;
+        }
+        .card_address{
+            width: 246px;
+            height: 20px;
+            display: flex;
+            justify-content: flex-end;
+            align-items: flex-start;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        .card_content{
+            margin-top: 10px;
+            width: 246px;
+            height: 105px;
+            font-size: 14px;
+            display:-webkit-box;
+            word-wrap:break-word;
+            -webkit-line-clamp:5;
+            -webkit-box-orient:vertical;
+            overflow:hidden;
+            text-overflow:ellipsis;
+        }
+        .postDetail_wrap{
+            width: 498px;
+            height: auto;
+            margin: auto;
+        }
+        .whereShallWeMeet{
+            width: 498px;
+            text-align: center;
+            height: 50px;
+            font-size: 20px;
+        }
+        .whereShallWeMeet p{
+            margin-top: 10px;
+        }
+        .postDetail_title{
+            width: 498px;
+            height: 45px;
+            border-bottom: 1px solid #e5e5e5;
+            display: flex;
+        }
+        .postDetail_title p{
+            margin-left: 20px;
+            margin-top: 20px;
+            margin-bottom: 5px;
+        }
+        .postDetail_img{
+            border-bottom: 1px solid #e5e5e5;
+            width: 498px;
+            height: 350px;
+        }
+        .postDetail_content_wrap{
+            border-bottom: 1px solid #e5e5e5;
+            width: 498px;
+            min-height: 200px;
+            margin: auto;
+        }
+        .postDetail_content{
+            width: 448px;
+            min-height: 190px;
+            margin: auto;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        .customWith{
+            width: 700px;
+        }
+        .postDetail_address{
+            width: auto;
+            height: 20px;
+            margin-top: 7px;
+            margin-left: 30px;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        .title_wrap{
+            display: flex;
+            width: 458px;
+            height: 50px;
+            flex-direction: column;
+        }
+        .postDetail_id{
+            width: 30px;
+            height: 30px;
+        }
+        .custompadding{
+            padding: 0;
+        }
+        .title{
+            width: 458px;
+            height: 35px;
+        }
+        .title p{
+            font-weight: 600;
+            margin-top: 13px;
+            margin-left: 30px;
+        }
+        .written_nick{
+            width: 458px;
+            height: 15px;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            font-size: 12px;
+        }
+        .written_id_content{
+            width: 138px;
+            height: 20px;
+            margin-top: 10px;
+            font-size: 12px;
+            text-align: center;
+        }
+        .custompadding{
+            padding-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <div>
+
+    </div>
+    <!-- Modal -->
+    <div class="modal fade bd-example-modal-lg" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" >
+      <div class="modal-dialog customWith" role="document">
+        <div class="modal-content">
+          <div class="modal-header custompadding">
+            <h5 class="modal-title" id="exampleModalLongTitle" style="text-align: center"></h5>
+              <div class="title_wrap">
+                  <div class="title">
+                      <p id="head_title"></p>
+                  </div>
+                  <div class="written_nick" id="userNick">
+
+                  </div>
+              </div>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="padding-top: 20px; padding-right: 20px">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+            <div class="modal-body" style="padding: 0">
+                <div class="postDetail_wrap">
+                    <div class="postDetail_img">
+                        <img src="https://www.visitbusan.net/uploadImgs/files/cntnts/20191229153531987_oen" style="width: 458px; height: 320px; margin-left: 20px; margin-top: 15px; border-radius: 5px"/>
+                    </div>
+                    <div class="postDetail_content_wrap" >
+                        <div class="postDetail_content">
+                            <p id="content"></p>
+                        </div>
+                    </div>
+                    <div class="postDetail_address">
+                        부산광역시 해운동
+                    </div>
+                    <div id="map" style="width:428px;height:230px; margin-left: 30px; margin-top: 6px; border-radius: 8px; margin-bottom: 10px"></div>
+                </div>
+          </div>
+          <div class="modal-footer">
+            <button id="lovebutton" type="button" onclick="clickLove()" class="btn btn-outline-danger">좋아요</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal -->
+    <div class="card_wrap">
+        <div class="card-columns colums">
+            {% for card in card_list%}
+                <div class="card" onclick="test({{ card }})" style="width: 286px; height: 406px; margin-left: 20px; cursor: pointer;">
+                <img class="card-img-top" src="https://www.visitbusan.net/uploadImgs/files/cntnts/20191229153531987_oen" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">{{card['title']}}</h5>
+                    <div class="card_address">
+                        부산광역시 해운동
+                    </div>
+                    <div class="card_content">
+                        {{ card['content'] }}
+                    </div>
+                    <div style="width: auto; height: 30px; display: flex; align-items: flex-end; font-size: 12px">
+                        written by {{card['nickName']}}
+                    </div>
+                    <div style="position: absolute; right: 10px; bottom: 10px; font-size: 13px">
+                        좋아요! {{card['love']}}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+</body>
+</html>
