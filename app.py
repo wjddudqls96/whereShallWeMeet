@@ -9,7 +9,7 @@ db = client.dbsparta
 ## HTML을 주는 부분
 @app.route('/')
 def home():
-    return render_template('index.html')
+    return render_template('./loginPage/yb_login.html')
 
 
 
