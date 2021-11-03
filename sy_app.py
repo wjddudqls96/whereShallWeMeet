@@ -13,7 +13,7 @@ app.config['UPLOAD_FOLDER'] = "./static/profile_pics"
 SECRET_KEY = 'SPARTA'
 
 client = MongoClient('mongodb://localhost')
-db = client.dbsparta_plus_week4
+db = client.dbsparta
 
 
 @app.route('/')
@@ -21,8 +21,7 @@ def home():
     token_receive = request.cookies.get('mytoken')
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-
-        return render_template('index.html')
+        return redirect('http://localhost:5000/')
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
     except jwt.exceptions.DecodeError:
@@ -32,7 +31,7 @@ def home():
 @app.route('/login')
 def login():
     msg = request.args.get("msg")
-    return render_template('login.html', msg=msg)
+    return render_template('/loginPage/sy/login.html', msg=msg)
 
 
 @app.route('/sign_in', methods=['POST'])
@@ -40,7 +39,6 @@ def sign_in():
     # 로그인<-login
     username_receive = request.form['username_give']
     password_receive = request.form['password_give']
-
     pw_hash = hashlib.sha256(password_receive.encode('utf-8')).hexdigest()  # 해싱
     result = db.users.find_one({'username': username_receive, 'password': pw_hash})
 
@@ -112,4 +110,4 @@ def get_posts():
 
 
 if __name__ == '__main__':
-    app.run('0.0.0.0', port=5000, debug=True)
+    app.run('0.0.0.0', port=3000, debug=True)
