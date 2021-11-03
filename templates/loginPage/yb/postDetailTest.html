@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/fontawesome.min.css" integrity="sha384-jLKHWM3JRmfMU0A5x5AkjWkw/EYfGUAGagvnfryNV3F9VqM98XiIH7VBGVoxVSc7" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap" rel="stylesheet">
     <title>Title</title>
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
@@ -15,11 +18,65 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=af44e6a34cd67be497818333ab1dd2e4"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/solid.js" integrity="sha384-+Ga2s7YBbhOD6nie0DzrZpJes+b2K1xkpKxTFFcx59QmVPaSA8c7pycsNaFwUK6l" crossorigin="anonymous"></script>
+<script defer src="https://use.fontawesome.com/releases/v5.0.8/js/fontawesome.js" integrity="sha384-7ox8Q2yzO/uWircfojVuCQOZl+ZZBg2D2J5nkpLqzH1HY0C1dHlTKIbpRz/LG23c" crossorigin="anonymous"></script>
 
     <script>
-        function showPostDetail(data){
-            console.log(data)
-            location.href = `postDetailPage/${JSON.stringify(data)}`;
+        $(document).ready(function () {    //로딩되었을떄
+            console.log($.cookie())
+            let cookieData = $.cookie()
+            let htmlcode = ``
+            if(cookieData['mytoken'] === undefined){
+                htmlcode = `
+                            <a class="navbar-brand" href="#"></a>
+                            <a href="#" onclick="gologinPage()" style="width: 70px; height: 40px; display: flex; justify-content: center; align-items: center;font-weight: 500; margin-right: 50px; text-decoration: none" >
+                                Login
+                            </a>`
+                $("#navbar").html(htmlcode);
+                console.log('쿠키없어요')
+
+            }else{
+                htmlcode = `
+            <a class="navbar-brand" href="#" id="navbar"></a>
+            <ul class="nav" style="margin-right: 80px">
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" style="color: black" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false"> My Account</a>
+                <div class="dropdown-menu" style="height: 113px">
+                    <div style="width: auto; min-width: 188px; height: 30px; border-bottom: 1px solid #d9d9d9">
+                        <div style="min-width: 150px; height: 20px;  margin-left: 15px; display: flex; align-items: center; font-size: 13px">
+                            로그인 한 아이디
+                            <span style="margin-left: 10px; font-weight: bold">
+                                jybin96
+                            </span>
+                        </div>
+                    </div>
+                    <div style="width: auto; min-width: 188px; height: 30px; border-bottom: 1px solid #d9d9d9">
+                        <div style="min-width: 150px; height: 20px;margin-top: 7px;  margin-left: 15px; display: flex; align-items: center; font-size: 13px">
+                            닉네임
+                            <span style="margin-left: 10px; font-weight: bold">
+                                부산남자
+                            </span>
+                        </div>
+                    </div>
+                    <a href="#" onclick="logout()" style="width: auto; min-width: 188px; height: 37px; border-bottom: 1px solid #d9d9d9; display: flex; justify-content: center; align-items: center; font-size: 13px">
+                        로그아웃 하기
+                    </a>
+                </div>
+              </li>
+            </ul>`
+                $("#navbar").html(htmlcode);
+                console.log('있어요')
+            }
+         })
+
+        function gologinPage(){
+            location.href = 'http://localhost:3000/'
+        }
+
+        function logout(){
+            $.removeCookie('mytoken', { path: '/' });
+            window.location.reload();
         }
         function test(data){
             console.log(data)
@@ -27,17 +84,17 @@
               keyboard: false
             })
             $("#exampleModalLong").on('shown.bs.modal', function() {   //모달이 켜지기 전에 카카오맵이 나와서 오류가 걸린다 그래서 이함수 안에 사용한다
-            var container = document.getElementById('map');
-                            var options = {
-                                center: new kakao.maps.LatLng(data['location'][0], data['location'][1]),
-                                level: 3
-                            };
-                            var map = new kakao.maps.Map(container, options);
-                            var markerPosition  = new kakao.maps.LatLng(data['location'][0], data['location'][1]);
-                            var marker = new kakao.maps.Marker({
-                                position: markerPosition
-                            });
-                            marker.setMap(map);
+                var container = document.getElementById('map');
+                var options = {
+                    center: new kakao.maps.LatLng(data['location'][0], data['location'][1]),
+                    level: 3
+                };
+                var map = new kakao.maps.Map(container, options);
+                var markerPosition  = new kakao.maps.LatLng(data['location'][0], data['location'][1]);
+                var marker = new kakao.maps.Marker({
+                    position: markerPosition
+                });
+                marker.setMap(map);
             })
             $("#head_title").text(data['title']); //title 넣기
             $("#content").text(data['content']); //콘텐츠 넣기
@@ -48,24 +105,25 @@
         function clickLove(event){
             let carId = event.data['cardId']
             console.log(carId)
+            let nickName = 'ㅋㅋㅋㅋ';
             $.ajax({
-              type: "POST",
-              url: "http://localhost:5000/api/love",
-              data: {carId:carId},
-              success: function(response){
-                  console.log(response)
-                  if(response['success'] === true){
-                      window.location.reload();
-                  }
-              }
-            })
+                type: "POST",
+                async : false,
+                url: "http://localhost:5000/api/love",
+                data: {carId:carId, nickName:nickName},
+                success: function(response){
+                    console.log(response)
+                    if(response['success'] === false)
+                        alert('이미 좋아요를 눌렸습니다!.');
+                    window.location.reload();
+                }
+                })
         }
     </script>
     <style>
         .card_wrap{
-            width: 1300px;
+            width: 1350px;
             margin: auto;
-            margin-top: 150px;
         }
         .colums{
             -webkit-column-count: 4;
@@ -188,6 +246,9 @@
         .custompadding{
             padding-bottom: 0;
         }
+        .custom_nav_background_color{
+            background-color: rgba(0, 0, 0, 0.08);
+        }
     </style>
 </head>
 <body>
@@ -232,40 +293,14 @@
       </div>
     </div>
     <!-- Modal -->
-    <nav class="navbar sticky-top navbar-light bg-light">
-      <a class="navbar-brand" href="#">Where Shall We Meet?</a>
-            <ul class="nav" style="margin-right: 80px">
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" style="color: black" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false"> My Account</a>
-                <div class="dropdown-menu">
-                    <div style="width: auto; min-width: 188px; height: 30px; border-bottom: 1px solid #d9d9d9">
-                        <div style="min-width: 150px; height: 20px;  margin-left: 15px; display: flex; align-items: center; font-size: 13px">
-                            로그인 한 아이디
-                            <span style="margin-left: 10px; font-weight: bold">
-                                jybin96
-                            </span>
-                        </div>
-                    </div>
-                    <div style="width: auto; min-width: 188px; height: 30px; border-bottom: 1px solid #d9d9d9">
-                        <div style="min-width: 150px; height: 20px;margin-top: 7px;  margin-left: 15px; display: flex; align-items: center; font-size: 13px">
-                            닉네임
-                            <span style="margin-left: 10px; font-weight: bold">
-                                부산남자
-                            </span>
-                        </div>
-                    </div>
-                    <div style="width: auto; min-width: 188px; height: 30px; border-bottom: 1px solid #d9d9d9">
-                        <div style="min-width: 150px; height: 20px;margin-top: 7px;  margin-left: 15px; display: flex; align-items: center; font-size: 13px">
-                            닉네임
-                            <span style="margin-left: 10px; font-weight: bold">
-                                부산남자
-                            </span>
-                        </div>
-                    </div>
-                </div>
-              </li>
-            </ul>
+    <nav class="navbar sticky-top custom_nav_background_color" id="navbar" >
     </nav>
+    <div style="width: 500px; height: 100px; margin: auto; margin-top: 30px; font-family: 'Black Han Sans', sans-serif; font-size: 60px" >
+        우리 어디서 만날까?
+    </div>
+    <div style="width: auto; height: 50px; display: flex; align-items: center; justify-content: flex-end; margin-bottom: 10px">
+            <button type="button" class="btn btn-danger" style="margin-right: 370px">포스팅 추가하기</button>
+    </div>
     <div class="card_wrap">
         <div class="card-columns colums">
             {% for card in card_list%}
@@ -290,6 +325,5 @@
             {% endfor %}
         </div>
     </div>
-
 </body>
 </html>

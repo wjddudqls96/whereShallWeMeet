@@ -30,12 +30,20 @@ def login():
 @app.route('/api/love',methods=['POST'])
 def love():
     carId = request.form['carId']
-    print(carId)
-    find_card =  list(db.test.find({'_id' : ObjectId(carId)}))
-    print(find_card)
-    find_card_love = find_card[0]['love']
-    db.test.update_one({'_id': ObjectId(carId)}, {'$set': {'love': find_card_love+1}})
-    return jsonify({'success': True})
+    userNickname = request.form['nickName']
+    find_card =  list(db.test.find({'_id' : ObjectId(carId)})) ### 같은 id인 포스트를 찾아온다
+    find_card_love = find_card[0]['love'] #찾은 포스트의 좋아요 개수
+    loveClickUsers = find_card[0]['loveClickUsers'] #찾은 포스트의 좋아요를 누른 사람들
+    if userNickname not in loveClickUsers:  #만약 좋아요를 처음 누른 사람이라면
+        print("좋아요 처음 눌렸어요.")
+        loveClickUsers.append(userNickname)  #좋아요를 누른 리스트에 집어넣고
+        db.test.update_one({'_id': ObjectId(carId)}, {'$set': {'love': find_card_love + 1,'loveClickUsers' :loveClickUsers}}) # 해당 포스트를 업데이트 시켜준다
+        return jsonify({'success': True})
+    else:                                   #만약 좋아요를 전에 눌렀던 사람이라면
+        print("이미 좋아요를 누룬사람입니다.")
+        return jsonify({'success': False})
+
+
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)
