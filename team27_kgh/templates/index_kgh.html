@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+
+    <title>Posting Page</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.js"></script>
+
+    <!--카카오 맵-->
+    <script type="text/javascript"
+            src="//dapi.kakao.com/v2/maps/sdk.js?appkey=0d0dde68ef3f51684068111853cc225c&libraries=services,drawing"></script>
+
+    <style>
+
+        .posting-box {
+            width: 500px;
+            margin-top: 20px;
+        }
+
+        .wrap {
+            width: 900px;
+            margin: auto;
+        }
+
+        .container {
+            padding-left: 50px;
+        }
+
+        .posting-box > .custom-file {
+            margin-bottom: 20px;
+        }
+
+        .posting-box > .form-group {
+            margin-top: 20px;
+        }
+
+        .box_searchbar {
+            margin-bottom: 5px;
+            float: right;
+        }
+
+        .form-inline > .form-control {
+            width: 300px;
+        }
+
+    </style>
+    <script>
+        $(document).ready(function () {
+            bsCustomFileInput.init()
+        })
+
+        function posting() {
+            let title = $('#title').val()
+            let content = $("#content").val()
+
+            let file = $('#file')[0].files[0]
+            let form_data = new FormData()
+
+            form_data.append("file_give", file)
+            form_data.append("title_give", title)
+            form_data.append("content_give", content)
+
+            $.ajax({
+                type: "POST",
+                url: "/diary",
+                data: form_data,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    alert(response["msg"])
+                    window.location.reload()
+                }
+            });
+        }
+
+        function exit() {
+            window.history.back()
+        }
+
+        function addsearch() {
+            주소를 입력 -> 해당 주소 받아서 -> 지도에 나타남 -> 이 값 저장
+        }
+
+
+    </script>
+</head>
+
+<body>
+<div class="wrap">
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1>Where Shall We Meet?</h1>
+            <div class="posting-box">
+                <div class="form-group">
+                    <input type="email" class="form-control" id="title" placeholder="사진 제목">
+                </div>
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="file">
+                    <label class="custom-file-label" for="file">사진 선택하기</label>
+                </div>
+                <div class="box_searchbar">
+                    <div class="form-inline my-2 my-lg-0">
+                        <input class="form-control mr-sm-2" type="search" placeholder="정확한 주소를 입력해주세요" aria-label="Search">
+                        <button onclick="addsearch()" class="btn btn-outline-success my-2 my-sm-0" type="submit">검색</button>
+                    </div>
+                </div>
+                <div id="map" style="width:100%;height:350px;"></div>
+                <script>
+                    var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+                        mapOption = {
+                            center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+                            level: 3 // 지도의 확대 레벨
+                        };
+                    // 지도를 생성합니다
+                    var map = new kakao.maps.Map(mapContainer, mapOption);
+                    // 주소-좌표 변환 객체를 생성합니다
+                    var geocoder = new kakao.maps.services.Geocoder();
+
+                    // 주소로 좌표를 검색합니다
+                    geocoder.addressSearch('망우로 400', function (result, status) {
+
+                        // 정상적으로 검색이 완료됐으면
+                        if (status === kakao.maps.services.Status.OK) {
+
+                            var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+                            // 결과값으로 받은 위치를 마커로 표시합니다
+                            var marker = new kakao.maps.Marker({
+                                map: map,
+                                position: coords
+                            });
+
+                            // 인포윈도우로 장소에 대한 설명을 표시합니다
+                            var infowindow = new kakao.maps.InfoWindow({
+                                content: '<div style="width:150px;text-align:center;padding:6px 0;">우리회사</div>'
+                            });
+                            infowindow.open(map, marker);
+
+                            // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+                            map.setCenter(coords);
+                        }
+                    });
+                    // 아래 코드는 인포윈도우를 지도에서 제거합니다
+                    // infowindow.close();
+                    // 아래 코드는 지도 위의 마커를 제거하는 코드입니다
+                    //marker.setMap(null);
+
+                </script>
+                <div class="form-group">
+                    <textarea class="form-control" id="content" rows="3" placeholder="내용 입력"></textarea>
+                </div>
+                <button onclick="posting()" type="button" class="btn btn-primary">자랑하기</button>
+                <button onclick="exit()" type="button" class="btn btn-secondary">좀 더 구경할래요</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>
