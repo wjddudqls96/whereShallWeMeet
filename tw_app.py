@@ -15,7 +15,7 @@ SECRET_KEY = 'SPARTA'
 client = MongoClient('13.124.154.54', 27017, username="test", password="test")
 db = client.dbsparta_plus_week4
 
-#
+####
 @app.route('/')
 def home():
     token_receive = request.cookies.get('mytoken')
