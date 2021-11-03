@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap" rel="stylesheet">
-    <title>Title</title>
+    <title>우리 어디서 만날까?</title>
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
@@ -35,7 +35,6 @@
                             </a>`
                 $("#navbar").html(htmlcode);
                 console.log('쿠키없어요')
-
             }else{
                 htmlcode = `
             <a class="navbar-brand" href="#" id="navbar"></a>
@@ -106,6 +105,7 @@
             let carId = event.data['cardId']
             console.log(carId)
             let nickName = 'ㅋㅋㅋㅋ';
+
             $.ajax({
                 type: "POST",
                 async : false,
@@ -118,6 +118,13 @@
                     window.location.reload();
                 }
                 })
+        }
+        function lovesort(type){
+            if(type === 'love'){
+                location.replace('http://localhost:5000/lovesort');
+            }else{
+                location.replace('http://localhost:5000/');
+            }
         }
     </script>
     <style>
@@ -263,7 +270,6 @@
                       <p id="head_title"></p>
                   </div>
                   <div class="written_nick" id="userNick">
-
                   </div>
               </div>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="padding-top: 20px; padding-right: 20px">
@@ -299,6 +305,13 @@
         우리 어디서 만날까?
     </div>
     <div style="width: auto; height: 50px; display: flex; align-items: center; justify-content: flex-end; margin-bottom: 10px">
+
+                <button class="btn btn-outline-secondary dropdown-toggle" id="sortType" style="position: absolute; left: 300px"  type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{sortType}}</button>
+                <div class="dropdown-menu" >
+                    <a class="dropdown-item" href="#" onclick="lovesort('nomal')">최신순</a>
+                    <a class="dropdown-item" href="#" onclick="lovesort('love')">좋아요순</a>
+                </div>
             <button type="button" class="btn btn-danger" style="margin-right: 370px">포스팅 추가하기</button>
     </div>
     <div class="card_wrap">

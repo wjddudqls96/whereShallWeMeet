@@ -1,5 +1,6 @@
 import json
 
+import flask
 from bson import ObjectId
 from flask import Flask, render_template, jsonify, request, redirect, url_for
 
@@ -11,13 +12,33 @@ client = MongoClient('localhost', 27017)
 db = client.dbsparta
 
 ## HTML을 주는 부분
-@app.route('/')
-def login():
+@app.route('/lovesort')
+def lovesort():
+    card_list = list(db.test.find({}).sort("love", -1))
+    print(card_list)
+    print('POST방식')
+    for card in card_list:
+        card['_id'] = str(card['_id'])  ### html에서는 objectid형을 못읽기 때문에 str로 변환해서 보내준다
+    return render_template('./loginPage/yb/postDetailTest.html', card_list=card_list, sortType='좋아요순')
+
+@app.route('/',methods=['POST','GET'])
+def index():
+    # print('GET방식')
+    # card_list = list(db.test.find({}))
+    # print(card_list)
+    # card_list.reverse()
+    # print(card_list)
+    # for card in card_list:
+    #     card['_id'] = str(card['_id'])  ### html에서는 objectid형을 못읽기 때문에 str로 변환해서 보내준다
+    # return render_template('./loginPage/yb/postDetailTest.html', card_list=card_list, testdata='zzzzzzz')
+    print('GET방식')
     card_list = list(db.test.find({}))
+    print(card_list)
+    card_list.reverse()
     print(card_list)
     for card in card_list:
         card['_id'] = str(card['_id']) ### html에서는 objectid형을 못읽기 때문에 str로 변환해서 보내준다
-    return render_template('./loginPage/yb/postDetailTest.html',card_list=card_list)
+    return render_template('./loginPage/yb/postDetailTest.html',card_list=card_list,sortType='최신순')
 
 
 # @app.route('/postDetailPage/<data>')
