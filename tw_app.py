@@ -6,7 +6,6 @@ from flask import Flask, render_template, jsonify, request, redirect, url_for
 from werkzeug.utils import secure_filename
 from datetime import datetime, timedelta
 
-
 app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 app.config['UPLOAD_FOLDER'] = "./static/profile_pics"
@@ -16,7 +15,7 @@ SECRET_KEY = 'SPARTA'
 client = MongoClient('13.124.154.54', 27017, username="test", password="test")
 db = client.dbsparta_plus_week4
 
-
+#
 @app.route('/')
 def home():
     token_receive = request.cookies.get('mytoken')
