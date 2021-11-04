@@ -43,22 +43,22 @@ def index():
 @app.route('/api/love',methods=['POST'])
 def love():
     carId = request.form['carId']
-    userNickname = request.form['nickName']
+    username = request.form['username']
     find_card =  list(db.test.find({'_id' : ObjectId(carId)})) ### 같은 id인 포스트를 찾아온다
     find_card_love = find_card[0]['love'] #찾은 포스트의 좋아요 개수
     loveClickUsers = find_card[0]['loveClickUsers'] #찾은 포스트의 좋아요를 누른 사람들
-    loveClickUsers.append(userNickname)  #좋아요를 누른 리스트에 집어넣고
+    loveClickUsers.append(username)  #좋아요를 누른 리스트에 집어넣고
     db.test.update_one({'_id': ObjectId(carId)}, {'$set': {'love': find_card_love + 1,'loveClickUsers' :loveClickUsers}}) # 해당 포스트를 업데이트 시켜준다
     return jsonify({'success': True})
 
 @app.route('/api/loveCancle',methods=['POST'])
 def loveCancle():
     carId = request.form['carId']
-    userNickname = request.form['nickName']
+    username = request.form['username']
     find_card = list(db.test.find({'_id': ObjectId(carId)}))  ### 같은 id인 포스트를 찾아온다
     find_card_love = find_card[0]['love']  # 찾은 포스트의 좋아요 개수
     loveClickUsers = find_card[0]['loveClickUsers']  # 찾은 포스트의 좋아요를 누른 사람들
-    loveClickUsers.remove(userNickname)
+    loveClickUsers.remove(username)
     db.test.update_one({'_id': ObjectId(carId)},{'$set': {'love': find_card_love - 1, 'loveClickUsers': loveClickUsers}})  # 해당 포스트를 업데이트 시켜준다
     return jsonify({'success': False})
 
