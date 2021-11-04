@@ -14,7 +14,7 @@ db = client.dbsparta
 ## HTML을 주는 부분
 @app.route('/lovesort')
 def lovesort():
-    card_list = list(db.test.find({}).sort("love", -1))
+    card_list = list(db.post.find({}).sort("love", -1))
     print(card_list)
     print('POST방식')
     for card in card_list:
@@ -24,7 +24,7 @@ def lovesort():
 @app.route('/')
 def index():
     print('GET방식')
-    card_list = list(db.test.find({}))
+    card_list = list(db.post.find({}))
     print(card_list)
     card_list.reverse()
     print(card_list)
@@ -44,22 +44,22 @@ def index():
 def love():
     carId = request.form['carId']
     username = request.form['username']
-    find_card =  list(db.test.find({'_id' : ObjectId(carId)})) ### 같은 id인 포스트를 찾아온다
+    find_card =  list(db.post.find({'_id' : ObjectId(carId)})) ### 같은 id인 포스트를 찾아온다
     find_card_love = find_card[0]['love'] #찾은 포스트의 좋아요 개수
     loveClickUsers = find_card[0]['loveClickUsers'] #찾은 포스트의 좋아요를 누른 사람들
     loveClickUsers.append(username)  #좋아요를 누른 리스트에 집어넣고
-    db.test.update_one({'_id': ObjectId(carId)}, {'$set': {'love': find_card_love + 1,'loveClickUsers' :loveClickUsers}}) # 해당 포스트를 업데이트 시켜준다
+    db.post.update_one({'_id': ObjectId(carId)}, {'$set': {'love': find_card_love + 1,'loveClickUsers' :loveClickUsers}}) # 해당 포스트를 업데이트 시켜준다
     return jsonify({'success': True})
 
 @app.route('/api/loveCancle',methods=['POST'])
 def loveCancle():
     carId = request.form['carId']
     username = request.form['username']
-    find_card = list(db.test.find({'_id': ObjectId(carId)}))  ### 같은 id인 포스트를 찾아온다
+    find_card = list(db.post.find({'_id': ObjectId(carId)}))  ### 같은 id인 포스트를 찾아온다
     find_card_love = find_card[0]['love']  # 찾은 포스트의 좋아요 개수
     loveClickUsers = find_card[0]['loveClickUsers']  # 찾은 포스트의 좋아요를 누른 사람들
     loveClickUsers.remove(username)
-    db.test.update_one({'_id': ObjectId(carId)},{'$set': {'love': find_card_love - 1, 'loveClickUsers': loveClickUsers}})  # 해당 포스트를 업데이트 시켜준다
+    db.post.update_one({'_id': ObjectId(carId)},{'$set': {'love': find_card_love - 1, 'loveClickUsers': loveClickUsers}})  # 해당 포스트를 업데이트 시켜준다
     return jsonify({'success': False})
 
 if __name__ == '__main__':

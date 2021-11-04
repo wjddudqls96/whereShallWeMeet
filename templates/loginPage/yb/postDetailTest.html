@@ -105,6 +105,8 @@
                 $("#head_title").text(data['title']); //title 넣기
                 $("#content").text(data['content']); //콘텐츠 넣기
                 $("#userNick").text('written by ' + data['nickName']); //콘텐츠 넣기
+                $("#address").text(data['address']);
+                $("#detail_img").attr("src", `static/${data['imgFile']}`);
 
                 let temp_html = ``
                 if(data['loveClickUsers'].includes(username)){
@@ -155,6 +157,9 @@
                     window.location.reload();
                 }
             })
+        }
+        function  goposting(){
+            location.href = 'http://localhost:4000/posting';
         }
     </script>
     <style>
@@ -308,15 +313,15 @@
           </div>
             <div class="modal-body" style="padding: 0">
                 <div class="postDetail_wrap">
-                    <div class="postDetail_img">
-                        <img src="https://www.visitbusan.net/uploadImgs/files/cntnts/20191229153531987_oen" style="width: 458px; height: 320px; margin-left: 20px; margin-top: 15px; border-radius: 5px"/>
+                    <div class="postDetail_img" style="display: flex; justify-content: center; align-items: center">
+                        <img id="detail_img" src="https://www.visitbusan.net/uploadImgs/files/cntnts/20191229153531987_oen" style="max-width: 458px; max-height: 320px; border-radius: 5px"/>
                     </div>
                     <div class="postDetail_content_wrap" >
                         <div class="postDetail_content">
                             <p id="content"></p>
                         </div>
                     </div>
-                    <div class="postDetail_address">
+                    <div class="postDetail_address" id="address">
                         부산광역시 해운동
                     </div>
                     <div id="map" style="width:428px;height:230px; margin-left: 30px; margin-top: 6px; border-radius: 8px; margin-bottom: 10px"></div>
@@ -342,17 +347,19 @@
                     <a class="dropdown-item" href="#" onclick="lovesort('nomal')">최신순</a>
                     <a class="dropdown-item" href="#" onclick="lovesort('love')">좋아요순</a>
                 </div>
-            <button type="button" class="btn btn-danger" style="margin-right: 370px">포스팅 추가하기</button>
+            <button type="button" onclick="goposting()" class="btn btn-danger" style="margin-right: 370px">포스팅 추가하기</button>
     </div>
     <div class="card_wrap">
         <div class="card-columns colums">
-            {% for card in card_list%}
+            {% for card in card_list %}
                 <div class="card" id="card" onclick="test({{ card }})" style="width: 286px; height: 406px; margin-left: 20px; cursor: pointer; z-index: 50">
-                <img class="card-img-top" src="https://www.visitbusan.net/uploadImgs/files/cntnts/20191229153531987_oen" alt="Card image cap">
+                <div style="min-width: 284px; min-height: 163px; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #eaeaea">
+                    <img class="card-img-top"  src="static/{{card['imgFile']}}" style="max-width: 284px; max-height: 163px;" alt="Card image cap">
+                </div>
                 <div class="card-body">
                     <h5 class="card-title">{{card['title']}}</h5>
                     <div class="card_address">
-                        부산광역시 해운동
+                        {{card['address']}}
                     </div>
                     <div class="card_content">
                         {{ card['content'] }}

@@ -26,24 +26,31 @@
     <link href="{{ url_for('static', filename='style_kgh.css') }}" rel="stylesheet">
 
     <title>Posting Page</title>
-
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.js"></script>
 
     <!--카카오 맵-->
     <script type="text/javascript"
-            src="//dapi.kakao.com/v2/maps/sdk.js?appkey=0d0dde68ef3f51684068111853cc225c&libraries=services,drawing"></script>
+            src="//dapi.kakao.com/v2/maps/sdk.js?appkey=af44e6a34cd67be497818333ab1dd2e4&libraries=services,drawing"></script>
 
 
     <script>
+        let locationxy =[];
         $(document).ready(function () {
+            console.log($.cookie()['username'])
             bsCustomFileInput.init()
         })
 
         function posting() {
+
+            let cookieData = $.cookie()
+
+
             let title = $('#title').val()
             let content = $("#content").val()
             let address = $('#id1').val()
-
+            let userid = cookieData['username']
+            let nickname = cookieData['nickname']
             let file = $('#file')[0].files[0]
             let form_data = new FormData()
 
@@ -51,7 +58,9 @@
             form_data.append("title_give", title)
             form_data.append("content_give", content)
             form_data.append("address_give", address)
-
+            form_data.append("userid_give", userid)
+            form_data.append("nickname_give", nickname)
+            form_data.append('location_give',locationxy)
             $.ajax({
                 type: "POST",
                 url: "/diary",
@@ -61,7 +70,7 @@
                 processData: false,
                 success: function (response) {
                     alert(response["msg"])
-                    window.location.reload()
+                    location.replace('http://localhost:5000/');
                 }
             });
         }
@@ -89,7 +98,8 @@
                 if (status === kakao.maps.services.Status.OK) {
 
                     var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-
+                    locationxy = [result[0].y, result[0].x]
+                    console.log(locationxy);
                     // 결과값으로 받은 위치를 마커로 표시합니다
                     var marker = new kakao.maps.Marker({
                         map: map,
