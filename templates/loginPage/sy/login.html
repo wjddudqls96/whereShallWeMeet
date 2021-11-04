@@ -194,6 +194,8 @@
                 success: function (response) {      //토큰: 아이디+유효한 시간
                     if (response['result'] == 'success') {
                         $.cookie('mytoken', response['token'], {path: '/'});        //앞으로의 요청에는 항상 토큰이 포함됨
+                        $.cookie('username', response['username'], {path: '/'});        //앞으로의 요청에는 항상 토큰이 포함됨
+                        $.cookie('nickname', response['nickname'], {path: '/'});        //앞으로의 요청에는 항상 토큰이 포함됨
                         window.location.replace("/")
                     } else {
                         alert(response['msg'])
