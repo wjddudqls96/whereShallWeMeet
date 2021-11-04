@@ -15,6 +15,7 @@ def home():
 def save_diary():
     title_receive = request.form['title_give']
     content_receive = request.form['content_give']
+    address_receive = request.form['address_give']
 
     file = request.files["file_give"]
 
@@ -31,6 +32,7 @@ def save_diary():
     doc = {
         'title':title_receive,
         'content':content_receive,
+        'address':address_receive,
         'file': f'{filename}.{extension}',
         'time': today.strftime('%Y.%m.%d')
     }
