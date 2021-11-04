@@ -9,6 +9,9 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap" rel="stylesheet">
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -26,7 +29,8 @@
     <link href="{{ url_for('static', filename='./gh_css/style_kgh.css') }}" rel="stylesheet">
 
     <title>Posting Page</title>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.js"></script>
 
     <!--카카오 맵-->
@@ -35,7 +39,7 @@
 
 
     <script>
-        let locationxy =[];
+        let locationxy = [];
         $(document).ready(function () {
             console.log($.cookie()['username'])
             bsCustomFileInput.init()
@@ -60,7 +64,7 @@
             form_data.append("address_give", address)
             form_data.append("userid_give", userid)
             form_data.append("nickname_give", nickname)
-            form_data.append('location_give',locationxy)
+            form_data.append('location_give', locationxy)
             $.ajax({
                 type: "POST",
                 url: "/diary",
@@ -123,43 +127,47 @@
 </head>
 
 <body>
- <nav class="navbar sticky-top custom_nav_background_color" id="navbar">account</nav>
 <div class="wrap">
     <div class="jumbotron jumbotron-fluid">
         <div class="container">
             <div class="posting-box">
-                <h1>Where Shall We Meet?</h1>
-                <div class="form-group">
-                    <input type="email" class="form-control" id="title" placeholder="사진 제목">
+                <div style="width: 500px; height: 100px; margin: auto; margin-top: 30px; font-family: 'Black Han Sans', sans-serif; font-size: 60px">
+                    우리 어디서 만날까?
                 </div>
-                <div class="custom-file">
-                    <input type="file" class="custom-file-input" id="file">
-                    <label class="custom-file-label" for="file">사진 선택하기</label>
-                </div>
-                <div class="box_searchbar">
-                    <div class="form-inline my-2 my-lg-0">
-                        <input class="form-control mr-sm-2" type="search" id="id1" placeholder="정확한 주소를 입력해주세요"
-                               aria-label="Search">
-                        <button onclick="addsearch()" class="btn btn-outline-success my-2 my-sm-0" type="submit">검색
-                        </button>
+                <section
+                        style="border-radius: 6px;box-shadow: 0 0.5em 1em -0.125em rgb(10 10 10 / 10%), 0 0 0 1px rgb(10 10 10 / 2%); padding: 20px">
+                    <div class="form-group">
+                        <input type="email" class="form-control" id="title" placeholder="사진 제목">
                     </div>
-                </div>
-                <div id="map" style="width:100%;height:350px;"></div>
-                <script>
-                    var mapContainer = document.getElementById('map'), // 지도를 표시할 div
-                        mapOption = {
-                            // center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-                            level: 3 // 지도의 확대 레벨
-                        };
-                    // 지도를 생성합니다
-                    var map = new kakao.maps.Map(mapContainer, mapOption);
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="file">
+                        <label class="custom-file-label" for="file">사진 선택하기</label>
+                    </div>
+                    <div class="box_searchbar">
+                        <div class="form-inline my-2 my-lg-0">
+                            <input class="form-control mr-sm-2" type="search" id="id1" placeholder="정확한 주소를 입력해주세요"
+                                   aria-label="Search">
+                            <button onclick="addsearch()" class="btn btn-outline-success my-2 my-sm-0" type="submit">검색
+                            </button>
+                        </div>
+                    </div>
+                    <div id="map" style="width:100%;height:350px;"></div>
+                    <script>
+                        var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+                            mapOption = {
+                                // center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+                                level: 3 // 지도의 확대 레벨
+                            };
+                        // 지도를 생성합니다
+                        var map = new kakao.maps.Map(mapContainer, mapOption);
 
-                </script>
-                <div class="form-group">
-                    <textarea class="form-control" id="content" rows="3" placeholder="내용 입력"></textarea>
-                </div>
-                <button onclick="posting()" type="button" class="btn btn-primary">자랑하기</button>
-                <button onclick="exit()" type="button" class="btn btn-secondary">좀 더 구경할래요</button>
+                    </script>
+                    <div class="form-group">
+                        <textarea class="form-control" id="content" rows="3" placeholder="내용 입력"></textarea>
+                    </div>
+                    <button onclick="posting()" type="button" class="btn btn-primary">자랑하기</button>
+                    <button onclick="exit()" type="button" class="btn btn-secondary">좀 더 구경할래요</button>
+                </section>
             </div>
         </div>
     </div>
