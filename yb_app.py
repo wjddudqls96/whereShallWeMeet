@@ -30,7 +30,19 @@ def index():
     print(card_list)
     for card in card_list:
         card['_id'] = str(card['_id']) ### html에서는 objectid형을 못읽기 때문에 str로 변환해서 보내준다
-    return render_template('./loginPage/yb/postDetailTest.html',card_list=card_list,sortType='최신순')
+    return render_template('./loginPage/yb/postDetailTest.html',card_list=card_list,sortType='최신순',title = '우리 어디서 만날까?',cardType='all')
+
+@app.route('/mypage/<userid>')
+def mypage(userid):
+    print(userid)
+    print('GET방식')
+    card_list = list(db.post.find({'userId': userid}))
+    print(card_list)
+    card_list.reverse()
+    print(card_list)
+    for card in card_list:
+        card['_id'] = str(card['_id']) ### html에서는 objectid형을 못읽기 때문에 str로 변환해서 보내준다
+    return render_template('./loginPage/yb/postDetailTest.html',card_list=card_list,sortType='최신순',title = '나만의 장소 저장소',cardType = 'my')
 
 
 # @app.route('/postDetailPage/<data>')
@@ -61,6 +73,13 @@ def loveCancle():
     loveClickUsers.remove(username)
     db.post.update_one({'_id': ObjectId(carId)},{'$set': {'love': find_card_love - 1, 'loveClickUsers': loveClickUsers}})  # 해당 포스트를 업데이트 시켜준다
     return jsonify({'success': False})
+
+@app.route('/api/deletePost',methods=['POST'])
+def deletePost():
+    carId = request.form['carId']
+    db.post.delete_one({'_id': ObjectId(carId)})
+    return jsonify({'success': True})
+
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)

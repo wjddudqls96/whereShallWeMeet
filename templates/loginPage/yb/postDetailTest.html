@@ -42,7 +42,7 @@
             <ul class="nav" style="margin-right: 80px">
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" style="color: black" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false"> My Account</a>
-                <div class="dropdown-menu" style="height: 113px">
+                <div class="dropdown-menu" style="height: 150px">
                     <div style="width: auto; min-width: 188px; height: 30px; border-bottom: 1px solid #d9d9d9">
                         <div style="min-width: 150px; height: 20px;  margin-left: 15px; display: flex; align-items: center; font-size: 13px">
                             로그인 한 아이디
@@ -59,8 +59,14 @@
                             </span>
                         </div>
                     </div>
-                    <a href="#" onclick="logout()" style="width: auto; min-width: 188px; height: 37px; border-bottom: 1px solid #d9d9d9; display: flex; justify-content: center; align-items: center; font-size: 13px">
-                        로그아웃 하기
+                    <div style="width: auto; min-width: 188px; height: 30px; border-bottom: 1px solid #d9d9d9">
+                        <div style="min-width: 150px; height: 20px;margin-top: 7px;  display: flex;justify-content: center; align-items: center; font-size: 13px">
+                            <a href="#" onclick="gomyPage()"> 나의 게시물 보기 </a>
+                        </div>
+                    </div>
+
+                    <a href="#" onclick="logout()" style="text-decoration:none; color:red; width: auto; min-width: 188px; height: 37px; border-bottom: 1px solid #d9d9d9; display: flex; justify-content: center; align-items: center; font-size: 13px">
+                          로그아웃 하기
                     </a>
                 </div>
               </li>
@@ -69,16 +75,20 @@
                 console.log('있어요')
             }
          })
+        function gomyPage(){
+            let cookieData = $.cookie()
 
+            location.href = `http://localhost:5000/mypage/${cookieData['username']}`
+        }
         function gologinPage(){
             location.href = 'http://localhost:3000/'
         }
 
         function logout(){
             $.removeCookie('mytoken', { path: '/' });
-            window.location.reload();
+            location.href = 'http://localhost:5000/'
         }
-        function test(data){
+        function test(data,cardType){
             console.log(data)
             let cookieData = $.cookie()
             let username = cookieData['username'];
@@ -106,9 +116,10 @@
                 $("#content").text(data['content']); //콘텐츠 넣기
                 $("#userNick").text('written by ' + data['nickName']); //콘텐츠 넣기
                 $("#address").text(data['address']);
-                $("#detail_img").attr("src", `static/${data['imgFile']}`);
+                $("#detail_img").attr("src", `http://localhost:5000/static/${data['imgFile']}`);
 
                 let temp_html = ``
+                let cancle_html = `<button id="deletebutton" type="button"  class="btn btn-outline-primary">포스트 삭제 하기</button>`
                 if(data['loveClickUsers'].includes(username)){
                     temp_html = `<button id="canclebutton" type="button" onclick="loveCancle()" class="btn btn-outline-danger">좋아요 취소하기</button>`
                     $('#lovebutton_div').html(temp_html)
@@ -118,7 +129,25 @@
                     $('#lovebutton_div').html(temp_html)
                     $("#lovebutton").on("click",{cardId:data['_id']},clickLove);
                 }
+                if(cardType === 'my')
+                    $('#lovebutton_div').append(cancle_html);
+                    $("#deletebutton").on("click",{cardId:data['_id']},deleteclick);
             }
+        }
+        function deleteclick(event){
+            let carId = event.data['cardId']
+            console.log(carId)
+            $.ajax({
+                type: "POST",
+                async : false,
+                url: "http://localhost:5000/api/deletePost",
+                data: {carId:carId},
+                success: function(response){
+                    console.log(response)
+                    alert('삭제 완료');
+                    window.location.reload();
+                    }
+            })
         }
         function clickLove(event){
             let carId = event.data['cardId']
@@ -159,7 +188,12 @@
             })
         }
         function  goposting(){
-            location.href = 'http://localhost:4000/posting';
+            let cookieData = $.cookie()
+            if(cookieData['mytoken'] === undefined){   //로그인 정보가 없을떄
+                alert('로그인후 이용 가능합니다!')
+                location.replace('http://localhost:3000/');
+            }else
+                location.href = 'http://localhost:4000/posting';
         }
     </script>
     <style>
@@ -328,7 +362,6 @@
                 </div>
           </div>
           <div class="modal-footer" id="lovebutton_div">
-
           </div>
         </div>
       </div>
@@ -337,7 +370,7 @@
     <nav class="navbar sticky-top custom_nav_background_color" id="navbar" >
     </nav>
     <div style="width: 500px; height: 100px; margin: auto; margin-top: 30px; font-family: 'Black Han Sans', sans-serif; font-size: 60px" >
-        우리 어디서 만날까?
+        {{ title }}
     </div>
     <div style="width: auto; height: 50px; display: flex; align-items: center; justify-content: flex-end; margin-bottom: 10px">
 
@@ -352,12 +385,14 @@
     <div class="card_wrap">
         <div class="card-columns colums">
             {% for card in card_list %}
-                <div class="card" id="card" onclick="test({{ card }})" style="width: 286px; height: 406px; margin-left: 20px; cursor: pointer; z-index: 50">
+                <div class="card" id="card" onclick="test({{ card }},`{{ cardType }}`)" style="width: 286px; height: 406px; margin-left: 20px; cursor: pointer; z-index: 50">
                 <div style="min-width: 284px; min-height: 163px; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #eaeaea">
-                    <img class="card-img-top"  src="static/{{card['imgFile']}}" style="max-width: 284px; max-height: 163px;" alt="Card image cap">
+                    <img class="card-img-top"  src="http://localhost:5000/static/{{card['imgFile']}}" style="max-width: 284px; max-height: 163px;" alt="Card image cap">
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title">{{card['title']}}</h5>
+                    <div style="width: 244px; height: 36px; text-overflow: ellipsis; overflow: hidden; font-size: 20px; font-weight: 700; white-space:nowrap;">
+                        {{card['title']}}
+                    </div>
                     <div class="card_address">
                         {{card['address']}}
                     </div>
