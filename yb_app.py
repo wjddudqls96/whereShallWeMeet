@@ -23,7 +23,7 @@ def lovesort():
 
 @app.route('/')
 def index():
-    print('GET방식')
+    #print('GET방식')
     card_list = list(db.post.find({}))
     print(card_list)
     card_list.reverse()
