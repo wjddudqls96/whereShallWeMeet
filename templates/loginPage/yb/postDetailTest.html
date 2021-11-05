@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <!-- fivicon -->
+    <meta property="og:title" content="어디서 만날까?"/>
+    <meta property="og:description" content="동네 자랑을 해봐!"/>
+    <meta property="og:image" content="{{ url_for('static', filename='/tw_image/ogimg.png') }}"/>
     <link rel="shortcut icon" href="{{ url_for('static', filename='/tw_image/favicon.ico') }}" type="image/x-icon">
     <link rel="icon" href="{{ url_for('static', filename='/tw_image/favicon.ico') }}" type="image/x-icon">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -225,6 +228,9 @@
         }
     </script>
     <style>
+        body{
+            background-color: #f3f3f3;
+        }
         @media screen and (min-width: 1296px) {
             .card_wrap {
                 width: 1256px;
@@ -243,6 +249,9 @@
 
         @media screen and (max-width: 1296px) and (min-width: 946px) {
             .card_wrap {
+
+                background-color: white;
+                border-radius: 6px;
                 width: 932px;
                 margin: auto;
             }
@@ -501,7 +510,7 @@
     </div>
 
     <div class="card-columns colums"
-         style="border-radius: 6px;box-shadow: 0 0.5em 1em -0.125em rgb(10 10 10 / 10%), 0 0 0 1px rgb(10 10 10 / 2%);">
+         style="background-color: white; border-radius: 6px;box-shadow: 0 0.5em 1em -0.125em rgb(10 10 10 / 10%), 0 0 0 1px rgb(10 10 10 / 2%);">
         {% for card in card_list %}
             <div class="card" id="card" onclick="test({{ card }},`{{ cardType }}`)"
                  style="width: 286px; height: 406px; margin-left: 20px; cursor: pointer; z-index: 50">
