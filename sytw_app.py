@@ -28,6 +28,12 @@ def home():
         return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
 
 
+@app.route('/login')
+def login():
+    msg = request.args.get("msg")
+    return render_template('/loginPage/sytw/login.html', msg=msg)
+
+
 @app.route('/sign_in', methods=['POST'])
 def sign_in():
     # 로그인<-login
@@ -80,7 +86,6 @@ def check_dup_nick():
     nickname_receive = request.form['nickname_give']
     exists = bool(db.users.find_one({"nickname": nickname_receive}))
     return jsonify({'result': 'success', 'exists': exists})
-
 
 
 if __name__ == '__main__':
