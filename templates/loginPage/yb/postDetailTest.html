@@ -13,6 +13,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap" rel="stylesheet">
+    <!-- fivicon -->
+    <link rel="shortcut icon" href="{{ url_for('static', filename='/tw_image/favicon.ico') }}" type="image/x-icon">
+    <link rel="icon" href="{{ url_for('static', filename='/tw_image/favicon.ico') }}" type="image/x-icon">
+
     <title>우리 어디서 만날까?</title>
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
@@ -221,12 +225,63 @@
         }
     </script>
     <style>
-        .card_wrap {
-            width: 648px;
-            margin: auto;
+        @media screen and (min-width: 1296px) {
+            .card_wrap {
+                width: 1256px;
+                margin: auto;
+            }
 
+            .bar {
+                width: 1256px;
+                margin: auto;
+                height: 50px;
+                align-items: center;
+                justify-content: flex-end;
+                margin-bottom: 10px
+            }
         }
 
+        @media screen and (max-width: 1296px) and (min-width: 946px) {
+            .card_wrap {
+                width: 932px;
+                margin: auto;
+            }
+
+            .bar {
+                width: 932px;
+                margin: auto;
+                height: 50px;
+                align-items: center;
+                justify-content: flex-end;
+                margin-bottom: 10px
+            }
+        }
+
+        @media screen and (max-width: 946px) and (min-width: 640px){
+            .card_wrap {
+                width: 628px;
+                margin: auto;
+            }
+
+            .bar {
+                width: 628px;
+                margin: auto;
+                height: 50px;
+                align-items: center;
+                justify-content: flex-end;
+                margin-bottom: 10px
+            }
+        }
+
+        @media screen and (max-width: 640px) {
+            .bar {
+                width: 346px;
+                height: 50px;
+                align-items: center;
+                justify-content: flex-end;
+                margin-bottom: 10px
+            }
+        }
         .colums {
             -webkit-column-count: 4;
             -moz-column-count: 4;
@@ -374,7 +429,7 @@
         }
     </style>
 </head>
-<body>
+
 <!-- Modal -->
 <div class="modal fade bd-example-modal-lg" id="exampleModalLong" tabindex="-1" role="dialog"
      aria-labelledby="exampleModalLongTitle" aria-hidden="true">
@@ -419,13 +474,15 @@
     </div>
 </div>
 <!-- Modal -->
-<nav class="navbar sticky-top custom_nav_background_color" id="navbar" style="background:none">
+
+<nav class="navbar sticky-top custom_nav_background_color" id="navbar" style="background:none; color: #e5e5e5">
 </nav>
-<div style="width: 500px; height: 100px; margin: auto; margin-top: 30px; font-family: 'Black Han Sans', sans-serif; font-size: 60px">
+<div style="width: 500px; height: 100px; margin: auto; margin-top: 30px; font-family: 'Black Han Sans', sans-serif; font-size: 60px;">
     {{ title }}
 </div>
+
 <div class="card_wrap">
-    <div style="width: 648px; margin:auto; height: 50px; align-items: center; justify-content: flex-end; margin-bottom: 10px">
+    <div class="bar">
         <button class="btn btn-outline-secondary dropdown-toggle" id="sortType" style="margin-left: 25px" float="left"
                 type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             {{ sortType }}</button>
@@ -438,7 +495,8 @@
         </button>
     </div>
 
-    <div class="card-columns colums" style="border-radius: 6px;box-shadow: 0 0.5em 1em -0.125em rgb(10 10 10 / 10%), 0 0 0 1px rgb(10 10 10 / 2%);">
+    <div class="card-columns colums"
+         style="border-radius: 6px;box-shadow: 0 0.5em 1em -0.125em rgb(10 10 10 / 10%), 0 0 0 1px rgb(10 10 10 / 2%);">
         {% for card in card_list %}
             <div class="card" id="card" onclick="test({{ card }},`{{ cardType }}`)"
                  style="width: 286px; height: 406px; margin-left: 20px; cursor: pointer; z-index: 50">
