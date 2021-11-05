@@ -1,15 +1,19 @@
 from flask import Flask, render_template, jsonify, request
+
 app = Flask(__name__)
 
 from pymongo import MongoClient
+
 client = MongoClient('localhost', 27017)
 db = client.dbsparta
 
 from datetime import datetime
 
+
 @app.route('/posting')
 def home():
     return render_template('/loginPage/gh/index_kgh.html')
+
 
 @app.route('/diary', methods=['POST'])
 def save_diary():
@@ -37,22 +41,23 @@ def save_diary():
     file.save(save_to)
 
     doc = {
-        'title':title_receive,
-        'content':content_receive,
-        'address':address_receive,
+        'title': title_receive,
+        'content': content_receive,
+        'address': address_receive,
         'location': location_receive,
         'imgFile': f'{filename}.{extension}',
         'time': today.strftime('%Y.%m.%d'),
-        'userId' : userid_receive,
-        'nickName' : nickname_receive,
+        'userId': userid_receive,
+        'nickName': nickname_receive,
         'loveClickUsers': [],
-        'love' : 0
+        'love': 0
 
     }
 
     db.post.insert_one(doc)
 
     return jsonify({'msg': '저장 완료!'})
+
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=4000, debug=True)
