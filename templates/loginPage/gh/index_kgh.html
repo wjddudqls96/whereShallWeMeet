@@ -79,6 +79,10 @@
             let nickname = cookieData['nickname']
             let file = $('#file')[0].files[0]
             console.log(file)
+            if(file === undefined){
+                alert('사진을 넣어주세요.')
+                return;
+            }
             let form_data = new FormData()
 
             form_data.append("file_give", file)
@@ -97,7 +101,7 @@
                 processData: false,
                 success: function (response) {
                     alert(response["msg"])
-                    location.replace('http://localhost:5000/');
+                    {#location.replace('http://localhost:5000/');#}
                 }
             });
         }
@@ -171,7 +175,7 @@
                     </div>
                     <div class="custom-file">
                         <input type="file" class="custom-file-input" id="file">
-                        <label class="custom-file-label" for="file">사진 선택하기</label>
+                        <label class="custom-file-label" for="file" accept ="image/gif,image/jpeg,image/png">사진 선택하기</label>
                     </div>
                     <div class="box_searchbar">
                         <div class="form-inline my-2 my-lg-0">
