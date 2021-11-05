@@ -18,7 +18,7 @@ def home():
 @app.route('/login')
 def login():
     msg = request.args.get("msg")
-    return render_template('/loginPage/sytw/login.html', msg=msg)
+    return render_template('/loginPage/login.html', msg=msg)
 
 
 if __name__ == '__main__':
