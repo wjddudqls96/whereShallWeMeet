@@ -225,12 +225,68 @@
         }
     </script>
     <style>
-        .card_wrap {
-            width: 1296px;
-            margin: auto;
+        @media screen and (min-width: 1296px) {
+            .card_wrap {
+                width: 1256px;
+                margin: auto;
+            }
 
+            .bar {
+                width: 1256px;
+                margin: auto;
+                height: 50px;
+                align-items: center;
+                justify-content: flex-end;
+                margin-bottom: 10px
+            }
         }
 
+        @media screen and (max-width: 1296px) and (min-width: 946px) {
+            .card_wrap {
+                width: 932px;
+                margin: auto;
+            }
+
+            .bar {
+                width: 932px;
+                margin: auto;
+                height: 50px;
+                align-items: center;
+                justify-content: flex-end;
+                margin-bottom: 10px
+            }
+        }
+
+        @media screen and (max-width: 946px) and (min-width: 640px){
+            .card_wrap {
+                width: 628px;
+                margin: auto;
+            }
+
+            .bar {
+                width: 628px;
+                margin: auto;
+                height: 50px;
+                align-items: center;
+                justify-content: flex-end;
+                margin-bottom: 10px
+            }
+        }
+
+        @media screen and (max-width: 640px) {
+            .card_wrap {
+                width: 628px;
+                margin: auto;
+            }
+
+            .bar {
+                width: 346px;
+                height: 50px;
+                align-items: center;
+                justify-content: flex-end;
+                margin-bottom: 10px
+            }
+        }
         .colums {
             -webkit-column-count: 4;
             -moz-column-count: 4;
@@ -431,7 +487,7 @@
 </div>
 
 <div class="card_wrap">
-    <div style="width: 960px; margin:auto; height: 50px; align-items: center; justify-content: flex-end; margin-bottom: 10px">
+    <div class="bar">
         <button class="btn btn-outline-secondary dropdown-toggle" id="sortType" style="margin-left: 25px" float="left"
                 type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             {{ sortType }}</button>
@@ -444,7 +500,8 @@
         </button>
     </div>
 
-    <div class="card-columns colums" style="border-radius: 6px;box-shadow: 0 0.5em 1em -0.125em rgb(10 10 10 / 10%), 0 0 0 1px rgb(10 10 10 / 2%);">
+    <div class="card-columns colums"
+         style="border-radius: 6px;box-shadow: 0 0.5em 1em -0.125em rgb(10 10 10 / 10%), 0 0 0 1px rgb(10 10 10 / 2%);">
         {% for card in card_list %}
             <div class="card" id="card" onclick="test({{ card }},`{{ cardType }}`)"
                  style="width: 286px; height: 406px; margin-left: 20px; cursor: pointer; z-index: 50">
