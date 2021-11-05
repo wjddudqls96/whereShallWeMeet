@@ -5,6 +5,7 @@ import hashlib
 from flask import Flask, render_template, jsonify, request, redirect, url_for
 from werkzeug.utils import secure_filename
 from datetime import datetime, timedelta
+from flask_cors import CORS
 
 app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
@@ -12,26 +13,26 @@ app.config['UPLOAD_FOLDER'] = "./static/profile_pics"
 
 SECRET_KEY = 'SPARTA'
 
-client = MongoClient('mongodb://localhost')
+client = MongoClient('mongodb://whereshallwemeet:sparta27@localhost', 27017)
 db = client.dbsparta
 
-
+CORS(app)
 @app.route('/')
 def home():
     token_receive = request.cookies.get('mytoken')
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-        return redirect('http://localhost:5000/')
+        return redirect('http://localhost:5000/login')
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
     except jwt.exceptions.DecodeError:
         return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
 
 
-@app.route('/login')
-def login():
-    msg = request.args.get("msg")
-    return render_template('/loginPage/sytw/login.html', msg=msg)
+# @app.route('/login')
+# def login():
+#     msg = request.args.get("msg")
+#     return render_template('/page/sytw/login_page.html', msg=msg)
 
 
 @app.route('/sign_in', methods=['POST'])
