@@ -97,7 +97,7 @@
             form_data.append("nickname_give", nickname)
             form_data.append('location_give', locationxy)
             $.ajax({
-                type: "POST",
+                type: "http://localhost:4000/POST",
                 url: "/diary",
                 data: form_data,
                 cache: false,

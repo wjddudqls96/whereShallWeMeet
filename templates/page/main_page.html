@@ -106,7 +106,7 @@
         }
 
         function gologinPage() {
-            location.href = 'http://localhost:3000/'
+            location.href = 'http://localhost:5000/login'
         }
 
         function logout() {
@@ -167,7 +167,7 @@
             $.ajax({
                 type: "POST",
                 async: false,
-                url: "http://localhost:5000/api/deletePost",
+                url: "http://localhost:4000/api/deletePost",
                 data: {carId: carId},
                 success: function (response) {
                     console.log(response)
@@ -184,7 +184,7 @@
             $.ajax({
                 type: "POST",
                 async: false,
-                url: "http://localhost:5000/api/love",
+                url: "http://localhost:4000/api/love",
                 data: {carId: carId, username: username},
                 success: function (response) {
                     console.log(response)
@@ -208,7 +208,7 @@
             $.ajax({
                 type: "POST",
                 async: false,
-                url: "http://localhost:5000/api/loveCancle",
+                url: "http://localhost:4000/api/loveCancle",
                 data: {carId: carId, username: username},
                 success: function (response) {
                     console.log(response)
@@ -223,7 +223,7 @@
                 alert('로그인후 이용 가능합니다!')
                 location.replace('http://localhost:3000/');
             } else
-                location.href = 'http://localhost:4000/posting';
+                location.href = 'http://localhost:5000/posting';
         }
     </script>
     <style>
@@ -492,12 +492,13 @@
 
 <nav class="navbar sticky-top custom_nav_background_color" id="navbar" style="background:none; color: #e5e5e5">
 </nav>
-<div style="width: 500px; height: 100px; margin: auto; margin-top: 30px; font-family: 'Black Han Sans', sans-serif; font-size: 60px;">
+<div style="width: 1200px;display: flex; justify-content: center; align-items: center; height: 100px; margin: auto; margin-top: 30px; font-family: 'Black Han Sans', sans-serif; font-size: 60px;">
     {{ title }}
 </div>
 
 <div class="card_wrap">
     <div class="bar">
+        {%   if cardType == 'all' %}
         <button class="btn btn-outline-secondary dropdown-toggle" id="sortType" style="margin-left: 25px" float="left"
                 type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             {{ sortType }}</button>
@@ -505,6 +506,7 @@
             <a class="dropdown-item" href="#" onclick="lovesort('nomal')">최신순</a>
             <a class="dropdown-item" href="#" onclick="lovesort('love')">좋아요순</a>
         </div>
+        {% endif %}
         <button type="button" onclick="goposting()" class="btn btn-danger" style="margin-right: 25px; float: right">포스팅
             추가하기
         </button>
