@@ -42,7 +42,7 @@ def mypage(userid):
     print(card_list)
     for card in card_list:
         card['_id'] = str(card['_id']) ### html에서는 objectid형을 못읽기 때문에 str로 변환해서 보내준다
-    return render_template('./loginPage/yb/postDetailTest.html',card_list=card_list,sortType='최신순',title = '나만의 장소 저장소',cardType = 'my')
+    return render_template('./loginPage/yb/postDetailTest.html',card_list=card_list,sortType='최신순',title = '나만의 장소',cardType = 'my')
 
 
 # @app.route('/postDetailPage/<data>')
