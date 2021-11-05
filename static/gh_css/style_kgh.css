@@ -1,0 +1,39 @@
+.navbar {
+    background-color: rgba(0, 0, 0, 0.08);
+}
+
+.jumbotron {
+    background: transparent;
+}
+
+.posting-box {
+    width: 500px;
+    margin: auto;
+}
+
+.wrap {
+    width: 1000px;
+    margin: auto;
+}
+
+.container {
+    padding-left: 50px;
+}
+
+.custom-file {
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-top: 20px;
+}
+
+.box_searchbar {
+    margin-bottom: 5px;
+    float: right;
+}
+
+.form-inline > .form-control {
+    width: 300px;
+}
+
