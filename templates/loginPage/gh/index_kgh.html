@@ -44,6 +44,7 @@
 
 
     <script>
+        let clicksearch = false;
         let locationxy = [];
         $(document).ready(function () {
             console.log($.cookie()['username'])
@@ -58,19 +59,30 @@
             let title = $('#title').val()
             if (title == "") {
                 alert('제목을 입력해주세요')
+                return;
             }
             let content = $("#content").val()
             if (content == "") {
                 alert('장소를 설명해주세요')
+                return;
             }
             let address = $('#id1').val()
             if (address == "") {
                 alert("주소를 입력해주세요")
+                return;
+            }
+            if(clicksearch === false){
+                alert('주소검색을 해주세요!')
+                return;
             }
             let userid = cookieData['username']
             let nickname = cookieData['nickname']
             let file = $('#file')[0].files[0]
             console.log(file)
+            if(file === undefined){
+                alert('사진을 넣어주세요.')
+                return;
+            }
             let form_data = new FormData()
 
             form_data.append("file_give", file)
@@ -133,7 +145,9 @@
 
                     // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
                     map.setCenter(coords);
+                    clicksearch = true
                 } else {
+                    clicksearch = false
                     alert('제대로 된 주소가 아닙니다!')
                 }
             });
@@ -160,8 +174,8 @@
                         <input type="email" class="form-control" id="title" placeholder="사진 제목">
                     </div>
                     <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="file">
-                        <label class="custom-file-label" for="file">사진 선택하기</label>
+                        <input type="file" class="custom-file-input" id="file" accept ="image/gif,image/jpeg,image/png">
+                        <label class="custom-file-label" for="file" >사진 선택하기</label>
                     </div>
                     <div class="box_searchbar">
                         <div class="form-inline my-2 my-lg-0">
