@@ -3,11 +3,14 @@
 <head>
 
     <!-- Webpage Title -->
-    <title>Log In | WhereShallWeMeet</title>
+    <title>어디서 만날까?</title>
 
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta property="og:title" content="어디서 만날까?"/>
+    <meta property="og:description" content="동네 자랑을 해봐!"/>
+    <meta property="og:image" content="{{ url_for('static', filename='/tw_image/ogimg.png') }}"/>
     <!-- fivicon -->
     <link rel="shortcut icon" href="{{ url_for('static', filename='/tw_image/favicon.ico') }}" type="image/x-icon">
     <link rel="icon" href="{{ url_for('static', filename='/tw_image/favicon.ico') }}" type="image/x-icon">
@@ -208,6 +211,12 @@
             });
         }
     </script>
+    <style>
+        body{
+            background-color: #f3f3f3;
+            min-height: 100vh;
+        }
+    </style>
 
 </head>
 <body>
@@ -215,7 +224,7 @@
 <section class="hero is-black">
     <div class="hero-body has-text-centered" style="margin-top: -20px;">
         <h1 class="title is-sparta"><i class="fa fa-map-marker fa-5x" aria-hidden="true"></i></h1>
-        <h1 class="title is-sparta" style="width: 500px; font-weight: 400; height: 50px; margin: auto; margin-top: 10px; font-family: 'Black Han Sans', sans-serif; font-size: 60px" >&nbsp;&nbsp;어디서 만날까?</h1>
+        <h1 class="title is-sparta" style="width: 500px; font-weight: 400; height: 50px; margin: auto; margin-top: 10px; font-family: 'Black Han Sans', sans-serif; font-size: 60px" >우리 어디서 만날까?</h1>
         <h3 class="subtitle is-sparta"></h3>
     </div>
 </section>
