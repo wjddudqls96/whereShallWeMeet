@@ -101,7 +101,7 @@
                 processData: false,
                 success: function (response) {
                     alert(response["msg"])
-                    {#location.replace('http://localhost:5000/');#}
+                    location.replace('http://localhost:5000/');
                 }
             });
         }
@@ -174,8 +174,8 @@
                         <input type="email" class="form-control" id="title" placeholder="사진 제목">
                     </div>
                     <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="file">
-                        <label class="custom-file-label" for="file" accept ="image/gif,image/jpeg,image/png">사진 선택하기</label>
+                        <input type="file" class="custom-file-input" id="file" accept ="image/gif,image/jpeg,image/png">
+                        <label class="custom-file-label" for="file" >사진 선택하기</label>
                     </div>
                     <div class="box_searchbar">
                         <div class="form-inline my-2 my-lg-0">
