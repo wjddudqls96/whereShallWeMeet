@@ -12,7 +12,7 @@ from datetime import datetime
 from flask_cors import CORS
 
 #client = MongoClient('localhost', 27017)
-client = MongoClient('localhost', 27017)
+client = MongoClient('mongodb://whereshallwemeet:sparta27@localhost', 27017)
 db = client.dbsparta
 
 

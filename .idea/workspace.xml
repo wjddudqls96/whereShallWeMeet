@@ -6,13 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="73c6e4d7-2e21-45d5-881d-a2d83ffbf311" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gh_app.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sytw_app.py" beforeDir="false" afterPath="$PROJECT_DIR$/login.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/loginPage/gh/index_kgh.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/page/posting_page.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/loginPage/sytw/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/page/login_page.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/loginPage/yb/postDetailTest.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/page/main_page.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yb_app.py" beforeDir="false" afterPath="$PROJECT_DIR$/posting.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -162,7 +155,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1636096758161</updated>
-      <workItem from="1636096764820" duration="2649000" />
+      <workItem from="1636096764820" duration="2853000" />
     </task>
     <servers />
   </component>

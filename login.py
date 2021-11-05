@@ -13,7 +13,7 @@ app.config['UPLOAD_FOLDER'] = "./static/profile_pics"
 
 SECRET_KEY = 'SPARTA'
 
-client = MongoClient('mongodb://localhost')
+client = MongoClient('mongodb://whereshallwemeet:sparta27@localhost', 27017)
 db = client.dbsparta
 
 CORS(app)
