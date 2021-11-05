@@ -48,7 +48,8 @@ def sign_in():
             'exp': datetime.utcnow() + timedelta(seconds=60 * 60 * 24)  # 로그인 24시간 유지
         }
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
-        return jsonify({'result': 'success', 'token': token, 'username': result["username"], 'nickname': result["nick_name"]})
+        return jsonify(
+            {'result': 'success', 'token': token, 'username': result["username"], 'nickname': result["nick_name"]})
     # 찾지 못하면
     else:  # 로그인 실패
         return jsonify({'result': 'fail', 'msg': '아이디/비밀번호가 일치하지 않습니다.'})

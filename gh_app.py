@@ -47,7 +47,6 @@ def save_diary():
         'nickName' : nickname_receive,
         'loveClickUsers': [],
         'love' : 0
-
     }
 
     db.post.insert_one(doc)
