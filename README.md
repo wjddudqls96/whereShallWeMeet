@@ -23,20 +23,18 @@ http://whereshallwemeet.shop/
 최석영 : 로그인 페이지 및 전체 CSS  
 김근형 : 포스팅 추가하기 페이지 및 영상 업로드  
 #
-2. 사용 기술
-Back-end
+### 3. 사용 기술
+Back-end  
+* Python3
+* Flask
+* MongoDB
 
-Python3
-Flask
-MongoDB
-
-Front-end
-
-html5
-CSS3
-JQuery
-Bulma
-deploy
+Front-end  
+* html5
+* CSS3
+* JQuery
+* Bulma
+* deploy
 
 AWS EC2
 
