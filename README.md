@@ -49,8 +49,8 @@ https://user-images.githubusercontent.com/64175671/140594424-21bc5f19-ea93-4bcc-
 자세한 영상 : https://youtu.be/K7LGtKgeIMI
 
 #
-4. 핵심기능
-로그인, 회원가입
+### 4. 핵심기능
+* 로그인, 회원가입
 : JWT를 이용하여 로그인과 회원가입을 구현하였습니다.
 : 아이디와 닉네임의 중복확인이 가능합니다.
 
