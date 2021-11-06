@@ -37,7 +37,9 @@ Front-end
 * deploy
 
 Server 
-* AWS EC2 (Ubuntu 18.04 LTS)
+* AWS EC2 (Ubuntu 18.04 LTS). 
+
+#
 
 3. 실행화면
 
