@@ -7,7 +7,7 @@ from flask_cors import CORS
 
 CORS(app)
 # client = MongoClient('localhost', 27017)
-client = MongoClient('mongodb://whereshallwemeet:sparta27@localhost', 27017)
+client = MongoClient('localhost', 27017)
 db = client.dbsparta
 
 
@@ -29,7 +29,7 @@ def lovesort():
     print('POST방식')
     for card in card_list:
         card['_id'] = str(card['_id'])  ### html에서는 objectid형을 못읽기 때문에 str로 변환해서 보내준다
-    return render_template('./page/main_page.html', card_list=card_list, sortType='좋아요순',title ='우리 어디서 만날까?')
+    return render_template('./page/main_page.html', card_list=card_list, sortType='좋아요순',title ='우리 어디서 만날까?', cardType='all')
 
 @app.route('/')
 def index():

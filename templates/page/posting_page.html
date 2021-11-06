@@ -97,15 +97,15 @@
             form_data.append("nickname_give", nickname)
             form_data.append('location_give', locationxy)
             $.ajax({
-                type: "http://13.124.150.133:4000/POST",
-                url: "/diary",
+                type: "POST",
+                url: "http://localhost:4000/diary",
                 data: form_data,
                 cache: false,
                 contentType: false,
                 processData: false,
                 success: function (response) {
                     alert(response["msg"])
-                    location.replace('http://13.124.150.133:5000/');
+                    location.replace('http://localhost:5000/');
                 }
             });
         }
