@@ -16,7 +16,7 @@ SECRET_KEY = 'SPARTA'
 client = MongoClient('localhost', 27017)
 db = client.dbsparta
 
-CORS(app)
+CORS(app) #통신 부분에서 cors 에러가 생겨 flask_cors 라이브러리를 설치한뒤에 cors오류 해결
 @app.route('/')
 def home():
     token_receive = request.cookies.get('mytoken')

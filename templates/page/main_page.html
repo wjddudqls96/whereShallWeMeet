@@ -47,20 +47,17 @@
             crossorigin="anonymous"></script>
 
     <script>
-        $(document).ready(function () {    //로딩되었을떄
-            console.log($.cookie())
-            let cookieData = $.cookie()
-            console.log(cookieData)
+        $(document).ready(function () {    //로딩되었을
+            let cookieData = $.cookie()  //쿠키값을 불러온다.
             let htmlcode = ``
-            if (cookieData['mytoken'] === undefined) {
+            if (cookieData['mytoken'] === undefined) {  //토큰 값이 없다면 로그인 상태가 아니기떄문에 nav바에 로그인 표시할 준비를 해야된다.
                 htmlcode = `
                             <a class="navbar-brand" href="#"></a>
                             <a href="#" onclick="gologinPage()" style="width: 70px; height: 40px; display: flex; justify-content: center; align-items: center;font-weight: 500; margin-right: 50px; text-decoration: none" >
                                 Login
-                            </a>`
-                $("#navbar").html(htmlcode);
-                console.log('쿠키없어요')
-            } else {
+                            </a>`  // nav바에 넣을 로그인 표시 html
+                $("#navbar").html(htmlcode);  //id가 navbar인 태그에 위의 html code를 넣는다
+            } else {   //로그인 상태라면
                 htmlcode = `
             <a class="navbar-brand" href="#" id="navbar"></a>
             <ul class="nav" style="margin-right: 80px">
@@ -93,28 +90,28 @@
                     </a>
                 </div>
               </li>
-            </ul>`
+            </ul>` //drop_down 계정관리 html을 준비한다
                 $("#navbar").html(htmlcode);
-                console.log('있어요')
             }
         })
 
-        function gomyPage() {
-            let cookieData = $.cookie()
-
-            location.href = `http://localhost:5000/mypage/${cookieData['username']}`
+        function gomyPage() {   //나의 게시물 페이지로 이동!
+            let cookieData = $.cookie()  // 쿠키값을 가져온뒤에
+            location.href = `http://localhost:5000/mypage/${cookieData['username']}` //쿠키에 저장된 아이디를 넣어준다.
         }
 
-        function gologinPage() {
+        function gologinPage() {  //로그인 페이지 이동
             location.href = 'http://localhost:5000/login'
         }
 
         function logout() {
-            $.removeCookie('mytoken', {path: '/'});
-            location.href = 'http://localhost:5000/'
+            $.removeCookie('mytoken', {path: '/'}); // 쿠키를 삭제한뒤에
+            $.removeCookie('username', {path: '/'});// 쿠키를 삭제한뒤에
+            $.removeCookie('', {path: '/'});// 쿠키를 삭제한뒤에
+            location.href = 'http://localhost:5000/'  //메인화면 다시 출력
         }
 
-        function test(data, cardType) {
+        function postdetail(data, cardType) {
             console.log(data)
             let cookieData = $.cookie()
             let username = cookieData['username'];
@@ -126,17 +123,17 @@
                     keyboard: false
                 })
                 $("#exampleModalLong").on('shown.bs.modal', function () {   //모달이 켜지기 전에 카카오맵이 나와서 오류가 걸린다 그래서 이함수 안에 사용한다
-                    var container = document.getElementById('map');
-                    var options = {
-                        center: new kakao.maps.LatLng(data['location'][0], data['location'][1]),
-                        level: 3
+                    var container = document.getElementById('map'); //map객체 container에 저장
+                    var options = {   //map 옵션 주는 부분
+                        center: new kakao.maps.LatLng(data['location'][0], data['location'][1]),  //시작 중심 좌표
+                        level: 3 //높낮이 부분
                     };
-                    var map = new kakao.maps.Map(container, options);
-                    var markerPosition = new kakao.maps.LatLng(data['location'][0], data['location'][1]);
+                    var map = new kakao.maps.Map(container, options); // container변수와 option을 가지고 kakaomap 객체 만든다.
+                    var markerPosition = new kakao.maps.LatLng(data['location'][0], data['location'][1]);   //마커 위치 생성 부분
                     var marker = new kakao.maps.Marker({
                         position: markerPosition
-                    });
-                    marker.setMap(map);
+                    });  //생성된 마커 위치를 가지고 마커를 만든다
+                    marker.setMap(map);  //만든 마커를 map객체에 붙힌다.
                 })
                 $("#head_title").text(data['title']); //title 넣기
                 $("#content").text(data['content']); //콘텐츠 넣기
@@ -146,22 +143,22 @@
 
                 let temp_html = ``
                 let cancle_html = `<button id="deletebutton" type="button"  class="btn btn-outline-primary">포스트 삭제 하기</button>`
-                if (data['loveClickUsers'].includes(username)) {
+                if (data['loveClickUsers'].includes(username)) {  //좋아요를 이미 누룬 사람이라면!
                     temp_html = `<button id="canclebutton" type="button" onclick="loveCancle()" class="btn btn-outline-danger">좋아요 취소하기</button>`
                     $('#lovebutton_div').html(temp_html)
-                    $("#canclebutton").on("click", {cardId: data['_id']}, loveCancle);
-                } else {
+                    $("#canclebutton").on("click", {cardId: data['_id']}, loveCancle);// id값의 온클릭함수의 매개변수에 cardId를 담는다
+                } else {  //좋아요를 안누른 사람이라면!
                     temp_html = `<button id="lovebutton" type="button" onclick="clickLove()" class="btn btn-outline-danger">좋아요</button>`
                     $('#lovebutton_div').html(temp_html)
-                    $("#lovebutton").on("click", {cardId: data['_id']}, clickLove);
+                    $("#lovebutton").on("click", {cardId: data['_id']}, clickLove);// id값의 온클릭함수의 매개변수에 cardId를 담는다
                 }
-                if (cardType === 'my')
+                if (cardType === 'my')  //나의 게시물이라면!
                     $('#lovebutton_div').append(cancle_html);
-                $("#deletebutton").on("click", {cardId: data['_id']}, deleteclick);
+                $("#deletebutton").on("click", {cardId: data['_id']}, deleteclick); // id값의 온클릭함수의 매개변수에 cardId를 담는다
             }
         }
 
-        function deleteclick(event) {
+        function deleteclick(event) {   //게시물 삭제 함수
             let carId = event.data['cardId']
             console.log(carId)
             $.ajax({
@@ -177,7 +174,7 @@
             })
         }
 
-        function clickLove(event) {
+        function clickLove(event) { //좋아요 함수
             let carId = event.data['cardId']
             let cookieData = $.cookie()
             let username = cookieData['username'];
@@ -193,7 +190,7 @@
             })
         }
 
-        function lovesort(type) {
+        function lovesort(type) {   //좋아요 순으로 정렬 하는 함수
             if (type === 'love') {
                 location.replace('http://localhost:5000/lovesort');
             } else {
@@ -201,7 +198,7 @@
             }
         }
 
-        function loveCancle(event) {
+        function loveCancle(event) {    //좋아요 취소하는 함수
             let carId = event.data['cardId']
             let cookieData = $.cookie()
             let username = cookieData['username'];
@@ -217,7 +214,7 @@
             })
         }
 
-        function goposting() {
+        function goposting() {    //포스팅페이지로 가는 함수
             let cookieData = $.cookie()
             if (cookieData['mytoken'] === undefined) {   //로그인 정보가 없을떄
                 alert('로그인후 이용 가능합니다!')
@@ -514,8 +511,9 @@
 
     <div class="card-columns colums"
          style="background-color: white; border-radius: 6px;box-shadow: 0 0.5em 1em -0.125em rgb(10 10 10 / 10%), 0 0 0 1px rgb(10 10 10 / 2%); padding-top: 20px">
+{#         jinja2로 받아온 card_list만큼 for 문 돌려서 card 출력하는 부분#}
         {% for card in card_list %}
-            <div class="card" id="card" onclick="test({{ card }},`{{ cardType }}`)"
+            <div class="card" id="card" onclick="postdetail({{ card }},`{{ cardType }}`)"
                  style="width: 286px; height: 406px; margin-left: 20px; cursor: pointer; z-index: 50">
                 <div style="min-width: 284px; min-height: 163px; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #eaeaea">
                     <img class="card-img-top" src="http://localhost:5000/static/{{ card['imgFile'] }}"

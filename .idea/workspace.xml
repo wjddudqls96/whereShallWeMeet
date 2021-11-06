@@ -9,9 +9,7 @@
       <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/login.py" beforeDir="false" afterPath="$PROJECT_DIR$/login.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/posting.py" beforeDir="false" afterPath="$PROJECT_DIR$/posting.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/page/login_page.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/page/login_page.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/page/main_page.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/page/main_page.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/page/posting_page.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/page/posting_page.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -173,7 +171,8 @@
       <option name="presentableId" value="Default" />
       <updated>1636096758161</updated>
       <workItem from="1636096764820" duration="5897000" />
-      <workItem from="1636158424098" duration="598000" />
+      <workItem from="1636158424098" duration="4233000" />
+      <workItem from="1636164121651" duration="561000" />
     </task>
     <servers />
   </component>
