@@ -28,12 +28,14 @@ Back-end
 * Python3
 * Flask
 * MongoDB
+
 Front-end  
 * html5
 * CSS3
 * JQuery
 * Bulma
 * deploy
+
 Server 
 * AWS EC2 (Ubuntu 18.04 LTS)
 
