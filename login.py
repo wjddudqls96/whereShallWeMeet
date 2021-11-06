@@ -17,6 +17,8 @@ client = MongoClient('localhost', 27017)
 db = client.dbsparta
 
 CORS(app)
+
+
 @app.route('/')
 def home():
     token_receive = request.cookies.get('mytoken')
@@ -27,12 +29,6 @@ def home():
         return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
     except jwt.exceptions.DecodeError:
         return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
-
-
-# @app.route('/login')
-# def login():
-#     msg = request.args.get("msg")
-#     return render_template('/page/sytw/login_page.html', msg=msg)
 
 
 @app.route('/sign_in', methods=['POST'])
