@@ -23,7 +23,7 @@ http://whereshallwemeet.shop/
 최석영 : 로그인 페이지 및 전체 CSS  
 김근형 : 포스팅 추가하기 페이지 및 영상 업로드  
 #
-### 3. 사용 기술
+### 3. 개발툴
 Back-end  
 * Python3
 * Flask
@@ -41,13 +41,14 @@ Server
 
 #
 
-3. 실행화면
+### 4. 실행화면
 
 https://user-images.githubusercontent.com/64175671/140594424-21bc5f19-ea93-4bcc-8790-f73ad4d80ac9.mp4
 
 
 자세한 영상 : https://youtu.be/K7LGtKgeIMI
 
+#
 4. 핵심기능
 로그인, 회원가입
 : JWT를 이용하여 로그인과 회원가입을 구현하였습니다.
