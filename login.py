@@ -16,7 +16,9 @@ SECRET_KEY = 'SPARTA'
 client = MongoClient('localhost', 27017)
 db = client.dbsparta
 
-CORS(app) #통신 부분에서 cors 에러가 생겨 flask_cors 라이브러리를 설치한뒤에 cors오류 해결
+CORS(app)  # 통신 부분에서 cors 에러가 생겨 flask_cors 라이브러리를 설치한뒤에 cors오류 해결
+
+
 @app.route('/')
 def home():
     token_receive = request.cookies.get('mytoken')
@@ -51,8 +53,8 @@ def sign_in():
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
         return jsonify(
             {'result': 'success', 'token': token, 'username': result["username"], 'nickname': result["nick_name"]})
-    # 찾지 못하면
-    else:  # 로그인 실패
+    # 찾지 못하면 로그인 실패
+    else:
         return jsonify({'result': 'fail', 'msg': '아이디/비밀번호가 일치하지 않습니다.'})
 
 
@@ -66,15 +68,14 @@ def sign_up():
     doc = {
         "username": username_receive,  # 아이디
         "password": password_hash,  # 비밀번호
-        "nick_name": nickname_receive,  # 프로필 이름 기본값은 아이디
-        "profile_pic": "",  # 프로필 사진 파일 이름
-        "profile_pic_real": "profile_pics/profile_placeholder.png",  # 프로필 사진 기본 이미지
-        "profile_info": ""  # 프로필 한 마디
+        "nick_name": nickname_receive,  # 닉네임
+
     }
     db.users.insert_one(doc)
     return jsonify({'result': 'success'})
 
 
+# id 중복검사
 @app.route('/sign_up/check_dup', methods=['POST'])
 def check_dup():
     username_receive = request.form['username_give']
@@ -82,6 +83,7 @@ def check_dup():
     return jsonify({'result': 'success', 'exists': exists})
 
 
+# 닉네임 중복검사
 @app.route('/sign_up/check_dup_nick', methods=['POST'])
 def check_dup_nick():
     nickname_receive = request.form['nickname_give']

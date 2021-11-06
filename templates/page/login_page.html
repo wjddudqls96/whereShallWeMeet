@@ -30,6 +30,8 @@
             //    alert("{{ msg }}")
             // {% endif %}
 
+        {#회원가입으로 넘어가려면..#}
+
         function toggle_sign_up() {
             $("#sign-up-box").toggleClass("is-hidden")
             $("#div-sign-in-or-up").toggleClass("is-hidden")
@@ -40,10 +42,14 @@
             $("#help-nick").toggleClass("is-hidden")
         }
 
+        {#id 표준#}
+
         function is_nickname(asValue) {
             var regExp = /^(?=.*[a-zA-Z])[-a-zA-Z0-9_.]{2,10}$/;
             return regExp.test(asValue);
         }
+
+        {#비밀번호 표준#}
 
         function is_password(asValue) {
             var regExp = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z!@#$%^&*]{8,20}$/;
@@ -79,11 +85,12 @@
                         $("#help-id").text("사용할 수 있는 아이디입니다.").removeClass("is-danger").addClass("is-success")
                     }
                     $("#help-id").removeClass("is-loading")
-
                 }
             });
         }
+
         {#닉네임 중복확인#}
+
         function check_dup_nick() {
             let nickname = $("#input-nickname").val()
             console.log(nickname)
@@ -110,6 +117,8 @@
                 }
             });
         }
+
+        {#회원가입#}
 
         function sign_up() {
             let username = $("#input-username").val()
@@ -171,6 +180,7 @@
             });
         }
 
+        {#로그인#}
         function sign_in() {
             let username = $("#input-username").val()
             let password = $("#input-password").val()
@@ -212,7 +222,7 @@
         }
     </script>
     <style>
-        body{
+        body {
             background-color: #f3f3f3;
             min-height: 100vh;
         }
@@ -224,7 +234,9 @@
 <section class="hero is-black">
     <div class="hero-body has-text-centered" style="margin-top: -20px;">
         <h1 class="title is-sparta"><i class="fa fa-map-marker fa-5x" aria-hidden="true"></i></h1>
-        <h1 class="title is-sparta" style="width: 500px; font-weight: 400; height: 50px; margin: auto; margin-top: 10px; font-family: 'Black Han Sans', sans-serif; font-size: 60px" >우리 어디서 만날까?</h1>
+        <h1 class="title is-sparta"
+            style="width: 500px; font-weight: 400; height: 50px; margin: auto; margin-top: 10px; font-family: 'Black Han Sans', sans-serif; font-size: 60px">
+            우리 어디서 만날까?</h1>
         <h3 class="subtitle is-sparta"></h3>
     </div>
 </section>
